@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{97624CD0-BD0B-403C-B499-9724A09AD24C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{9CB54895-EC32-4CFA-9646-087510914471}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		Dockerfile = Dockerfile
+		Echo.yaml = Echo.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{C06EC622-C5D7-48DB-B209-2D4F2242A040}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{06C2DE8C-7FEC-4159-A745-402893845099}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Echo", "src\Echo\Echo.csproj", "{F15E558C-9D19-4605-AED2-39B583C69038}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F15E558C-9D19-4605-AED2-39B583C69038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F15E558C-9D19-4605-AED2-39B583C69038}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F15E558C-9D19-4605-AED2-39B583C69038}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F15E558C-9D19-4605-AED2-39B583C69038}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F15E558C-9D19-4605-AED2-39B583C69038} = {97624CD0-BD0B-403C-B499-9724A09AD24C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7116710A-7D27-4B61-BF4E-1B2F966352A2}
+	EndGlobalSection
+EndGlobal
