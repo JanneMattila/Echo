@@ -12,6 +12,26 @@ docker build . -t echo:latest
 docker run -p "2001:80" echo:latest
 ``` 
 
+### How to test locally
+
+Using `curl`:
+
+```batch
+curl -d '{ "firstName": "John", "lastName": "Doe" }' -H "Content-Type: application/json" -X POST http://localhost:2001/api/echo
+``` 
+
+Using `PowerShell`:
+
+```powershell
+$url = "http://localhost:2001/api/echo"
+$data = @{
+    firstName = "John"
+    lastName = "Doe"
+}
+$body = ConvertTo-Json $data
+Invoke-RestMethod -Body $body -ContentType "application/json" -Method "POST" -DisableKeepAlive -Uri $url
+``` 
+
 ### How to deploy to Azure Container Instances (ACI)
 
 Deploy published image to [Azure Container Instances (ACI)](https://docs.microsoft.com/en-us/azure/container-instances/) the Azure CLI way:
