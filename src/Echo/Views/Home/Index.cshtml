@@ -1,5 +1,23 @@
-﻿<div>
-    Send data to <pre style="display: inline;">/api/echo</pre> endpoint to see it here.
+﻿@model string
+<div>
+    Send data to <pre style="display: inline;">@Model/api/echo</pre> endpoint to see it here. <button onclick="document.getElementById('help').style.display = '';">?</button>
+</div>
+<div id="help" style="background-color:lightyellow;display:none">
+    <button onclick="document.getElementById('help').style.display = 'none';">X</button>
+    <br /><br />
+
+    Using curl:
+    <pre id="curl">curl -d '{ "firstName": "John", "lastName": "Doe" }' -H "Content-Type: application/json" -X POST @Model/api/echo</pre>
+
+    Using PowerShell:
+    <pre id="curl">$url = "@Model/api/echo"
+$data = @@{
+    firstName = "John"
+    lastName = "Doe"
+}
+$body = ConvertTo-Json $data
+Invoke-RestMethod -Body $body -ContentType "application/json" -Method "POST" -DisableKeepAlive -Uri $url</pre>
+    <br />
 </div>
 
 <div id="echo"></div>

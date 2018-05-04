@@ -8,7 +8,7 @@ namespace Echo.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(model: $"{this.Request.Scheme}://{this.Request.Host}");
         }
 
         public IActionResult Error()
