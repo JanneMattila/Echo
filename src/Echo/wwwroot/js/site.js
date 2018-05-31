@@ -6,11 +6,13 @@ function addMessage(msg) {
     echoElement.insertBefore(element, echoElement.firstChild);
 }
 
-let logger = new signalR.ConsoleLogger(signalR.LogLevel.Information);
-let transportType = signalR.TransportType.WebSockets;
 let protocol = new signalR.JsonHubProtocol();
 let hubRoute = "Echo";
-let connection = new signalR.HubConnection(hubRoute, { transport: transportType, logger: logger, protocol: protocol });
+let connection = new signalR.HubConnectionBuilder()
+    .configureLogging(signalR.LogLevel.Trace)
+    .withUrl(hubRoute)
+    .withHubProtocol(protocol)
+    .build();
 
 connection.on('echo', function (msg) {
     let data = "Date received: " + new Date().toLocaleTimeString();
