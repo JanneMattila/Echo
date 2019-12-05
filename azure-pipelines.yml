@@ -1,5 +1,5 @@
 variables:
-  imageName: 'jannemattila/echo'
+  repository: 'jannemattila/echo'
 
 trigger:
 - master
@@ -16,8 +16,9 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'DockerHub'
+        repository: $(repository)
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: |
-          $(imageName):$(Build.BuildNumber)
-          $(imageName):latest
+          $(Build.BuildNumber)
+          latest
