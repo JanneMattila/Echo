@@ -1,5 +1,11 @@
 # Instructions
 
+## Build Status
+
+[![Build Status](https://jannemattila.visualstudio.com/jannemattila/_apis/build/status/JanneMattila.QuizMaker?branchName=master)](https://jannemattila.visualstudio.com/jannemattila/_build/latest?definitionId=43&branchName=master)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Working with 'Echo'
 
 ### How to create image locally
@@ -41,7 +47,7 @@ Deploy published image to [Azure Container Instances (ACI)](https://docs.microso
 aciName="echo"
 resourceGroup="echo-dev-rg"
 location="westeurope"
-image="jannemattila/echo:latest"
+image="jannemattila/echo"
 
 # Login to Azure
 az login
@@ -72,26 +78,26 @@ Deploy published image to [Azure Container Instances (ACI)](https://docs.microso
 $aciName="echo"
 $resourceGroup="echo-dev-rg"
 $location="westeurope"
-$image="jannemattila/echo:latest"
+$image="jannemattila/echo"
 
 # Login to Azure
-Login-AzureRmAccount
+Login-AzAccount
 
 # *Explicitly* select your working context
-Select-AzureRmSubscription -SubscriptionName <YourSubscriptionName>
+Select-AzSubscription -SubscriptionName <YourSubscriptionName>
 
 # Create new resource group
-New-AzureRmResourceGroup -Name $resourceGroup -Location $location
+New-AzResourceGroup -Name $resourceGroup -Location $location
 
 # Create ACI
-New-AzureRmContainerGroup -Name $aciName -Image $image -ResourceGroupName $resourceGroup -IpAddressType Public
+New-AzContainerGroup -Name $aciName -Image $image -ResourceGroupName $resourceGroup -IpAddressType Public
 
 # Show the properties
-Get-AzureRmContainerGroup -Name $aciName -ResourceGroupName $resourceGroup
+Get-AzContainerGroup -Name $aciName -ResourceGroupName $resourceGroup
 
 # Show the logs
-Get-AzureRmContainerInstanceLog -ContainerGroupName $aciName -ResourceGroupName $resourceGroup
+Get-AzContainerInstanceLog -ContainerGroupName $aciName -ResourceGroupName $resourceGroup
 
 # Wipe out the resources
-Remove-AzureRmResourceGroup -Name $resourceGroup -Force
+Remove-AzResourceGroup -Name $resourceGroup -Force
 ```
