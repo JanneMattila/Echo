@@ -1,0 +1,29 @@
+variables:
+  imageName: 'jannemattila/echo' # Always update latest
+
+trigger:
+- master
+- develop
+
+name: 1.0.$(Rev:r)
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: ubuntu-16.04
+    steps:
+    - task: Docker@1
+      displayName: 'Build an image'
+      inputs:
+        imageName: $(imageName)
+        includeLatestTag: true
+    
+    - task: Docker@1
+      displayName: 'Push an image'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: DockerHub
+        command: 'Push an image'
+        imageName: $(imageName)
+        includeSourceTags: true
