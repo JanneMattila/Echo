@@ -1,6 +1,7 @@
 ﻿using Echo.Hubs;
 using Echo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,11 @@ namespace Echo.Controllers
     [Route("api/Echo")]
     public class EchoController : Controller
     {
-        private readonly EchoHubShared _echoHubShared;
+        private readonly IHubContext<EchoHub, IEchoHub> _echoHub;
 
-        public EchoController(EchoHubShared echoHubShared)
+        public EchoController(IHubContext<EchoHub, IEchoHub> echoHubShared)
         {
-            _echoHubShared = echoHubShared;
+            _echoHub = echoHubShared;
         }
 
         public async Task<ActionResult> ExecuteAsync()
@@ -29,7 +30,7 @@ namespace Echo.Controllers
                     headers.AppendLine($"{item.Key}: {item.Value.ToString()}");
                 }
 
-                await _echoHubShared.Echo(new EchoModel()
+                await _echoHub.Clients.All.Echo(new EchoModel()
                 {
                     Request = $"{this.Request.Method} {this.Request.Path}{this.Request.QueryString} {this.Request.Protocol}",
                     Headers = headers.ToString(),

@@ -2,7 +2,7 @@
 
 namespace Echo.Hubs
 {
-    public class EchoHub : Hub
+    public class EchoHub : Hub<IEchoHub>
     {
     }
 }
