@@ -1,5 +1,5 @@
 variables:
-  imageName: 'jannemattila/echo:$(Build.BuildNumber)'
+  imageName: 'jannemattila/echo'
 
 trigger:
 - master
@@ -13,17 +13,11 @@ stages:
     pool:
       vmImage: ubuntu-16.04
     steps:
-    - task: Docker@1
-      displayName: 'Build an image'
+    - task: Docker@2
       inputs:
-        imageName: $(imageName)
-        includeLatestTag: true
-    
-    - task: Docker@1
-      displayName: 'Push an image'
-      inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: DockerHub
-        command: 'Push an image'
-        imageName: $(imageName)
-        includeSourceTags: true
+        containerRegistry: 'DockerHub'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+          $(imageName):$(Build.BuildNumber)
+          $(imageName):latest
