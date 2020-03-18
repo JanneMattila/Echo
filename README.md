@@ -38,6 +38,19 @@ $body = ConvertTo-Json $data
 Invoke-RestMethod -Body $body -ContentType "application/json" -Method "POST" -DisableKeepAlive -Uri $url
 ``` 
 
+Using Visual Studio Code with [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension:
+
+```http
+### Invoke Echo
+POST http://localhost:2001/api/echo HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{
+    firstName = "John"
+    lastName = "Doe"
+}
+``` 
+
 ### How to deploy to Azure Container Instances (ACI)
 
 Deploy published image to [Azure Container Instances (ACI)](https://docs.microsoft.com/en-us/azure/container-instances/) the Azure CLI way:

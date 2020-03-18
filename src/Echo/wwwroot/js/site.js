@@ -9,7 +9,6 @@ function addMessage(msg) {
 let protocol = new signalR.JsonHubProtocol();
 let hubRoute = "Echo";
 let connection = new signalR.HubConnectionBuilder()
-    .configureLogging(signalR.LogLevel.Trace)
     .withUrl(hubRoute)
     .withHubProtocol(protocol)
     .build();
@@ -38,3 +37,20 @@ connection.start()
     .catch(function (err) {
         addMessage(err);
     });
+
+function copyToClipboard(elementName) {
+    var endpoint = document.getElementById(elementName);
+    console.log(endpoint.innerText);
+
+    navigator.clipboard.writeText(endpoint.innerText);
+}
+
+function showHelp() {
+    document.getElementById('helpOpen').style.display = 'none';
+    document.getElementById('helpClose').style.display = '';
+}
+
+function hideHelp() {
+    document.getElementById('helpOpen').style.display = '';
+    document.getElementById('helpClose').style.display = 'none';
+}
