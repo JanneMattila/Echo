@@ -48,9 +48,11 @@ function copyToClipboard(elementName) {
 function showHelp() {
     document.getElementById('helpOpen').style.display = 'none';
     document.getElementById('helpClose').style.display = '';
+    document.getElementById('help').style.display = '';
 }
 
 function hideHelp() {
     document.getElementById('helpOpen').style.display = '';
     document.getElementById('helpClose').style.display = 'none';
+    document.getElementById('help').style.display = 'none';
 }

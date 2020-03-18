@@ -2,13 +2,12 @@
 <div>
     Send data to <pre style="display: inline;" id="endpoint">@Model/api/echo</pre>
     <button onclick="copyToClipboard('endpoint');">&#128203;</button>
-    endpoint to see it here. 
+    endpoint to see it here.
     <button id="helpOpen" onclick="showHelp();">➕</button>
+    <button id="helpClose" onclick="hideHelp();" style="display:none">➖</button>
 </div>
-<div id="helpClose" style="background-color:lightyellow;display:none">
-    <button onclick="hideHelp();">➖</button>
-    <br /><br />
-
+<div id="help" style="background-color:lightyellow;display:none">
+    <br />
     Using curl: <button onclick="copyToClipboard('curl');">&#128203;</button>
     <pre id="curl">curl -d '{ "firstName": "John", "lastName": "Doe" }' -H "Content-Type: application/json" -X POST @Model/api/echo</pre>
 
