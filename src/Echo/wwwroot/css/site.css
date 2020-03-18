@@ -6,4 +6,5 @@
 pre {
     background-color: lightgray;
     padding: 5px;
+    white-space: pre-wrap;
 }
