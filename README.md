@@ -46,8 +46,8 @@ POST http://localhost:2001/api/echo HTTP/1.1
 Content-Type: application/json; charset=utf-8
 
 {
-    firstName = "John"
-    lastName = "Doe"
+    firstName: "John"
+    lastName: "Doe"
 }
 ``` 
 
