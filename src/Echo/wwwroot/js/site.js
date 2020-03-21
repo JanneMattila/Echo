@@ -56,3 +56,9 @@ function hideHelp() {
     document.getElementById('helpClose').style.display = 'none';
     document.getElementById('help').style.display = 'none';
 }
+
+document.addEventListener('keyup', (event) => {
+    if (event.keyCode === 27 /* Esc */) {
+        hideHelp();
+    }
+});
