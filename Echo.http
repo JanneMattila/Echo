@@ -1,0 +1,14 @@
+@endpoint = http://localhost:53118
+
+### POST example
+POST {{endpoint}}/api/echo HTTP/1.1
+Content-Type: application/json
+
+{
+  "data": "here"
+}
+
+### OPTIONS example (webhook validation request)
+OPTIONS {{endpoint}}/api/echo HTTP/1.1
+WebHook-Request-Origin: eventemitter.example.com
+WebHook-Request-Rate: 120
