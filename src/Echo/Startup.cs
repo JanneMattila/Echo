@@ -45,7 +45,7 @@ namespace Echo
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Pages}/{action=Index}/{id?}");
                 endpoints.MapHub<EchoHub>("/Echo");
             });
         }

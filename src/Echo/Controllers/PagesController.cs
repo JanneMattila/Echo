@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Echo.Controllers
 {
-    public class HomeController : Controller
+    public class PagesController : Controller
     {
         private readonly IHubContext<EchoHub, IEchoHub> _echoHub;
 
-        public HomeController(IHubContext<EchoHub, IEchoHub> echoHub)
+        public PagesController(IHubContext<EchoHub, IEchoHub> echoHub)
         {
             _echoHub = echoHub;
         }
