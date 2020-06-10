@@ -2,7 +2,12 @@
 using Echo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Net.Http.Headers;
+using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +29,39 @@ namespace Echo.Controllers
 
         public async Task<IActionResult> Echo()
         {
+            await PushToEcho();
+            return View();
+        }
+
+        [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, VaryByHeader = "x-custom")]
+        public async Task<IActionResult> EchoCache()
+        {
+            await PushToEcho();
+
+            var ifNoneMatch = Request.Headers
+                .FirstOrDefault(h => h.Key == HeaderNames.IfNoneMatch).Value;
+
+            var content = Request.Headers
+                .FirstOrDefault(h => h.Key == "x-custom").Value;
+            if (string.IsNullOrEmpty(content))
+            {
+                content = Guid.NewGuid().ToString("D");
+            }
+
+            var contentETag = Convert.ToBase64String(Encoding.UTF8.GetBytes(content));
+
+            if (ifNoneMatch.Any() && 
+                ifNoneMatch.Contains(contentETag))
+            {
+                return StatusCode((int)HttpStatusCode.NotModified);
+            }
+
+            Response.Headers.Add(HeaderNames.ETag, contentETag);
+            return View();
+        }
+
+        private async Task PushToEcho()
+        {
             var headers = new StringBuilder();
             foreach (var item in this.HttpContext.Request.Headers)
             {
@@ -36,8 +74,6 @@ namespace Echo.Controllers
                 Headers = headers.ToString(),
                 Body = string.Empty
             });
-
-            return View();
         }
 
         public IActionResult Error()

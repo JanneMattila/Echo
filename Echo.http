@@ -12,3 +12,14 @@ Content-Type: application/json
 OPTIONS {{endpoint}}/api/echo HTTP/1.1
 WebHook-Request-Origin: eventemitter.example.com
 WebHook-Request-Rate: 120
+
+### Page view to cause echo
+GET {{endpoint}}/pages/echo HTTP/1.1
+
+### Page view with cache
+GET {{endpoint}}/pages/echocache
+
+### Page view with cache
+GET {{endpoint}}/pages/echocache
+X-Custom: ABC
+If-None-Match: QUJD
