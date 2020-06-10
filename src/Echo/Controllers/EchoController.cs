@@ -15,9 +15,9 @@ namespace Echo.Controllers
     {
         private readonly IHubContext<EchoHub, IEchoHub> _echoHub;
 
-        public EchoController(IHubContext<EchoHub, IEchoHub> echoHubShared)
+        public EchoController(IHubContext<EchoHub, IEchoHub> echoHub)
         {
-            _echoHub = echoHubShared;
+            _echoHub = echoHub;
         }
 
         public async Task<ActionResult> ExecuteAsync()
@@ -28,7 +28,7 @@ namespace Echo.Controllers
                 var headers = new StringBuilder();
                 foreach (var item in this.HttpContext.Request.Headers)
                 {
-                    headers.AppendLine($"{item.Key}: {item.Value.ToString()}");
+                    headers.AppendLine($"{item.Key}: {item.Value}");
                 }
 
                 await _echoHub.Clients.All.Echo(new EchoModel()
