@@ -29,14 +29,14 @@ namespace Echo.Controllers
 
         public async Task<IActionResult> Echo()
         {
-            await PushToEcho();
-            return View();
+            var data = await PushToEcho();
+            return View(model: data);
         }
 
         [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, VaryByHeader = "x-custom")]
         public async Task<IActionResult> EchoCache()
         {
-            await PushToEcho();
+            var data = await PushToEcho();
 
             var ifNoneMatch = Request.Headers
                 .FirstOrDefault(h => h.Key == HeaderNames.IfNoneMatch).Value;
@@ -57,21 +57,17 @@ namespace Echo.Controllers
             }
 
             Response.Headers.Add(HeaderNames.ETag, contentETag);
-            return View();
+            return View(model: data);
         }
 
-        //[ResponseCache(/*Duration = 0, Location = ResponseCacheLocation.None,*/ NoStore = true)]
         [ResponseCache(NoStore = true)]
         public async Task<IActionResult> EchoCacheNever()
         {
-            await PushToEcho();
-
-            //Response.Headers.Add(HeaderNames.ETag, Guid.NewGuid().ToString("D"));
-            //Response.Headers.Add(HeaderNames.ETag, "abc");
-            return View();
+            var data = await PushToEcho();
+            return View(model: data);
         }
 
-        private async Task PushToEcho()
+        private async Task<string> PushToEcho()
         {
             var headers = new StringBuilder();
             foreach (var item in this.HttpContext.Request.Headers)
@@ -85,6 +81,8 @@ namespace Echo.Controllers
                 Headers = headers.ToString(),
                 Body = string.Empty
             });
+
+            return headers.ToString();
         }
 
         public IActionResult Error()
