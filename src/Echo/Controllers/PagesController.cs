@@ -24,7 +24,7 @@ namespace Echo.Controllers
 
         public IActionResult Index()
         {
-            return View(model: $"{this.Request.Scheme}://{this.Request.Host}");
+            return View(model: $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}");
         }
 
         public async Task<IActionResult> Echo()
@@ -57,6 +57,17 @@ namespace Echo.Controllers
             }
 
             Response.Headers.Add(HeaderNames.ETag, contentETag);
+            return View();
+        }
+
+        //[ResponseCache(/*Duration = 0, Location = ResponseCacheLocation.None,*/ NoStore = true)]
+        [ResponseCache(NoStore = true)]
+        public async Task<IActionResult> EchoCacheNever()
+        {
+            await PushToEcho();
+
+            //Response.Headers.Add(HeaderNames.ETag, Guid.NewGuid().ToString("D"));
+            //Response.Headers.Add(HeaderNames.ETag, "abc");
             return View();
         }
 
