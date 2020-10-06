@@ -3,7 +3,7 @@
 ## Build Status
 
 [![Build Status](https://dev.azure.com/jannemattila/jannemattila/_apis/build/status/JanneMattila.Echo?branchName=master)](https://dev.azure.com/jannemattila/jannemattila/_build/latest?definitionId=43&branchName=master)
-
+![Docker Pulls](https://img.shields.io/docker/pulls/jannemattila/echo?style=plastic)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Working with 'Echo'
