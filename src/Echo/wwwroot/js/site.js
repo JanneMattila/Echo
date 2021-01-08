@@ -13,12 +13,37 @@ let connection = new signalR.HubConnectionBuilder()
     .withHubProtocol(protocol)
     .build();
 
+const originalTitle = document.title;
+
+let isFocus = true;
+let unreadMessages = 0;
+
+function updateTitle() {
+    document.title = originalTitle + (isFocus || unreadMessages === 0 ? "" : `: ${unreadMessages}`);
+}
+
+window.addEventListener('focus', () => {
+    isFocus = true;
+    unreadMessages = 0;
+    updateTitle();
+});
+
+window.addEventListener('blur', () => {
+    isFocus = false;
+});
+
 connection.on('echo', function (msg) {
     let data = "Date received: " + new Date().toLocaleTimeString();
     data += "\n" + msg.request;
     data += "\n\n" + msg.headers;
     data += "\n" + msg.body;
     addMessage(data);
+
+    if (!isFocus) {
+        unreadMessages++;
+    }
+
+    updateTitle();
 });
 
 connection.onclose(function (e) {
