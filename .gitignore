@@ -10,3 +10,5 @@
 *.user
 /**/node_modules
 /**/PublishProfiles/
+/src/Echo/Properties/ServiceDependencies/echobin - Web Deploy
+/src/Echo/.config

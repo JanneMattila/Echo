@@ -1,8 +1,11 @@
 ﻿using Echo.Hubs;
 using Echo.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +34,11 @@ namespace Echo.Controllers
                     headers.AppendLine($"{item.Key}: {item.Value}");
                 }
 
+                if (this.HttpContext.Request.HasJsonContentType())
+                {
+                    body = FormatJson(body);
+                }
+
                 await _echoHub.Clients.All.Echo(new EchoModel()
                 {
                     Request = $"{this.Request.Method} {this.Request.Path}{this.Request.QueryString} {this.Request.Protocol}",
@@ -49,6 +57,18 @@ namespace Echo.Controllers
                 this.HttpContext.Response.Headers.Add("WebHook-Allowed-Rate", new StringValues("*"));
             }
             return Ok();
+        }
+
+        private string FormatJson(string json)
+        {
+            try
+            {
+                return JToken.Parse(json).ToString();
+            }
+            catch (Exception)
+            {
+                return json;
+            }
         }
     }
 }
