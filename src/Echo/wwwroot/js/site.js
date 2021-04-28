@@ -82,6 +82,12 @@ function hideHelp() {
     document.getElementById('help').style.display = 'none';
 }
 
+function clearLog() {
+    console.log('clearing log');
+    echoElement.innerHTML = '';
+    updateTitle();
+}
+
 document.addEventListener('keyup', (event) => {
     if (event.keyCode === 27 /* Esc */) {
         hideHelp();
