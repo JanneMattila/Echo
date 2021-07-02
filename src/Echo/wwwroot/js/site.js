@@ -10,6 +10,7 @@ let protocol = new signalR.JsonHubProtocol();
 let hubRoute = "Echo";
 let connection = new signalR.HubConnectionBuilder()
     .withUrl(hubRoute)
+    .withAutomaticReconnect()
     .withHubProtocol(protocol)
     .build();
 
