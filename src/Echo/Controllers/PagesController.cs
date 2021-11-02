@@ -7,7 +7,6 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +23,13 @@ namespace Echo.Controllers
 
         public IActionResult Index()
         {
-            return View(model: $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}");
+            var scheme = this.Request.Scheme;
+            if (Request.Headers.ContainsKey("x-arr-ssl") &&
+                Request.Headers["x-arr-ssl"].Contains("true"))
+            {
+                scheme = Uri.UriSchemeHttps;
+            }
+            return View(model: $"{scheme}://{this.Request.Host}{this.Request.PathBase}");
         }
 
         public async Task<IActionResult> Echo()
@@ -50,7 +55,7 @@ namespace Echo.Controllers
 
             var contentETag = Convert.ToBase64String(Encoding.UTF8.GetBytes(content));
 
-            if (ifNoneMatch.Any() && 
+            if (ifNoneMatch.Any() &&
                 ifNoneMatch.Contains(contentETag))
             {
                 return StatusCode((int)HttpStatusCode.NotModified);

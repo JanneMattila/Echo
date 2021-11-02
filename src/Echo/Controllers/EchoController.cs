@@ -50,7 +50,7 @@ namespace Echo.Controllers
             if (this.HttpContext.Request.Method == "OPTIONS" &&
                 this.HttpContext.Request.Headers.ContainsKey("WebHook-Request-Origin"))
             {
-                // CloudEvents spec: 
+                // CloudEvents spec:
                 // https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#41-validation-request
                 // We let all the webhooks use this endpoint freely without limits
                 this.HttpContext.Response.Headers.Add("WebHook-Allowed-Origin", new StringValues("*"));
