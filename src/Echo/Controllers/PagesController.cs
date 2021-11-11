@@ -23,7 +23,7 @@ namespace Echo.Controllers
 
         public IActionResult Index()
         {
-            var scheme = this.Request.Scheme;
+            var scheme = Request.Scheme;
             if (Request.Headers.ContainsKey("x-arr-ssl") &&
                 Request.Headers["x-arr-ssl"].Contains("true"))
             {
