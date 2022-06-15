@@ -12,7 +12,7 @@ COPY /src/Echo .
 RUN dotnet publish Echo.csproj --output /app/ --configuration Release
 
 # 2. Release image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0.0-alpine3.14-amd64
+FROM mcr.microsoft.com/dotnet/aspnet:6.0.6-alpine3.14-amd64
 WORKDIR /app
 EXPOSE 80
 
