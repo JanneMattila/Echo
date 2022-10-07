@@ -1,9 +1,14 @@
 ﻿let echoElement = document.getElementById("echo");
 function addMessage(msg) {
     console.log(msg);
-    let element = document.createElement('pre');
-    element.innerText = msg;
-    echoElement.insertBefore(element, echoElement.firstChild);
+
+    const template = document.getElementById("block");
+
+    const block = template.content.cloneNode(true);
+
+    block.querySelectorAll("text")[0].textContent = msg;
+
+    echoElement.insertBefore(block, echoElement.firstChild);
 }
 
 let protocol = new signalR.JsonHubProtocol();

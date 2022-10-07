@@ -1,6 +1,6 @@
 ﻿body {
-    padding-top: 5px;
-    padding-left: 5px;
+    padding-top: 2px;
+    padding-left: 2px;
 }
 
 pre {
@@ -8,3 +8,27 @@ pre {
     padding: 5px;
     white-space: pre-wrap;
 }
+
+.code {
+    background-color: lightgray;
+    white-space: pre-wrap;
+    padding: 5px;
+    margin-top: 5px;
+    font-family: monospace;
+}
+
+.close {
+    position: relative;
+    float: right;
+    border: none;
+    color: darkgray;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: lightgray;
+}
+
+    .close:hover {
+        color: black;
+        background-color: darkgray;
+    }

@@ -34,7 +34,12 @@ Content-Type: application/json; charset=utf-8
     <br />
 </div>
 
-<div id="echo"></div>
+<div id="echo">
+</div>
+
+<template id="block">
+    <div class="code"><button onclick="this.parentElement.remove();" class="close">&#x2716;</button><text></text></div>
+</template>
 
 @section Scripts
 {
