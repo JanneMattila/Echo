@@ -1,36 +1,123 @@
 ﻿body {
+    --background-color: white;
+    --color: black;
+    --url-background-color: lightgray;
+    --url-color: black;
+    --button-background-color: lightgray;
+    --button-color: black;
+    --button-border-color: darkgray;
+    --help-background-color: #ebebeb;
+    --help-color: black;
+    --clip-background-color: darkgray;
+    --clip-color: black;
+    --code-background-color: lightgray;
+    --code-color: black;
+    --hoverable-button-background-color: white;
+    --hoverable-button-color: lightgray;
+    --hoverable-button-hover-background-color: lightgray;
+    --hoverable-button-hover-color: black;
+    background-color: var(--background-color);
+    color: var(--color);
     padding-top: 2px;
     padding-left: 2px;
 }
 
-pre {
-    background-color: darkgray;
-    padding: 5px;
-    white-space: pre-wrap;
+.light {
+    --background-color: white;
+    --color: black;
+    --url-background-color: lightgray;
+    --url-color: black;
+    --button-background-color: lightgray;
+    --button-color: black;
+    --button-border-color: darkgray;
+    --help-background-color: #ebebeb;
+    --help-color: black;
+    --clip-background-color: darkgray;
+    --clip-color: black;
+    --code-background-color: lightgray;
+    --code-color: black;
+    --hoverable-button-background-color: white;
+    --hoverable-button-color: lightgray;
+    --hoverable-button-hover-background-color: lightgray;
+    --hoverable-button-hover-color: black;
+}
+
+.dark {
+    --background-color: #0C1116;
+    --color: darkgray;
+    --url-background-color: dimgray;
+    --url-color: black;
+    --button-background-color: darkgray;
+    --button-color: black;
+    --button-border-color: lightgray;
+    --help-background-color: dimgray;
+    --help-color: black;
+    --clip-background-color: #0C1116;
+    --clip-color: lightgray;
+    --code-background-color: dimgray;
+    --code-color: dimgray;
+    --hoverable-button-background-color: #0C1116;
+    --hoverable-button-color: dimgray;
+    --hoverable-button-hover-background-color: white;
+    --hoverable-button-hover-color: black;
 }
 
 .url {
-    background-color: lightgray;
+    background-color: var(--url-background-color);
+    color: var(--url-color);
     padding: 3px;
     white-space: pre-wrap;
     display: inline;
     font-family: monospace;
 }
 
+.clip {
+    background-color: var(--clip-background-color);
+    color: var(--clip-color);
+    padding: 3px;
+    margin-top: 5px;
+    display: block;
+    white-space: pre;
+    font-family: monospace;
+}
+
 button {
+    background-color: var(--button-background-color);
+    color: var(--button-color);
     width: 35px;
     height: 25px;
     text-align: center;
     line-height: 20px;
+    border: 1px solid var(--button-border-color);
 }
 
+.theme {
+    background-color: var(--hoverable-button-background-color);
+    color: var(--hoverable-button-color);
+    position: relative;
+    float: right;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+    .theme:hover {
+        background-color: var(--hoverable-button-hover-background-color);
+        color: var(--hoverable-button-hover-color);
+    }
+
 .help {
-    background-color: lightgray;
+    background-color: var(--help-background-color);
+    color: var(--help-color);
     margin-top: 5px;
+    padding: 5px;
 }
 
 .code {
-    background-color: lightgray;
+    /*background-color: var(--code-background-color);*/
+    color: var(--code-color);
+    border: 2px solid var(--code-background-color);
     white-space: pre-wrap;
     padding: 5px;
     margin-top: 5px;
@@ -38,17 +125,17 @@ button {
 }
 
 .close {
+    background-color: var(--hoverable-button-background-color);
+    color: var(--hoverable-button-color);
     position: relative;
     float: right;
     border: none;
-    color: darkgray;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    background-color: lightgray;
 }
 
     .close:hover {
-        color: black;
-        background-color: darkgray;
+        background-color: var(--hoverable-button-hover-background-color);
+        color: var(--hoverable-button-hover-color);
     }

@@ -7,30 +7,36 @@
     <button id="clear" onclick="clearLog();">⟳</button>
     <button id="helpOpen" onclick="showHelp();">➕</button>
     <button id="helpClose" onclick="hideHelp();" style="display:none">➖</button>
+    <button class="theme" onclick="changeTheme();">☀</button>
 </div>
 <div id="help" style="display:none" class="help">
-    <br />
     Using curl: <button onclick="copyToClipboard('curl');">&#128203;</button>
-    <pre id="curl">curl -d '{ "firstName": "John", "lastName": "Doe" }' -H "Content-Type: application/json" -X POST @Model/api/echo</pre>
+    <br />
+    <text id="curl" class="clip">curl -d '{ "firstName": "John", "lastName": "Doe" }' -H "Content-Type: application/json" -X POST @Model/api/echo</text>
+    <br />
 
     Using PowerShell: <button onclick="copyToClipboard('pwsh');">&#128203;</button>
-    <pre id="pwsh">$url = "@Model/api/echo"
+    <br />
+    <text id="pwsh" class="clip">$url = "@Model/api/echo"
 $data = @@{
     firstName = "John"
     lastName = "Doe"
 }
 $body = ConvertTo-Json $data
-Invoke-RestMethod -Body $body -ContentType "application/json" -Method "POST" -DisableKeepAlive -Uri $url</pre>
+Invoke-RestMethod -Body $body -ContentType "application/json" -Method "POST" -DisableKeepAlive -Uri $url</text>
+    <br />
 
     Using Visual Studio Code with <a href="https://marketplace.visualstudio.com/items?itemName=humao.rest-client" target="_blank">REST Client</a> extension: <button onclick="copyToClipboard('vscode');">&#128203;</button>
-    <pre id="vscode">### Invoke Echo
+    <br />
+    <text id="vscode" class="clip">### Invoke Echo
 POST @Model/api/echo HTTP/1.1
 Content-Type: application/json; charset=utf-8
 
 {
     firstName: "John"
     lastName: "Doe"
-}</pre>
+}</text>
+
 </div>
 
 <div id="echo">
