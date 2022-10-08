@@ -1,10 +1,14 @@
 # Instructions
 
-## Build Status
-
 [![Build Status](https://dev.azure.com/jannemattila/jannemattila/_apis/build/status/JanneMattila.Echo?branchName=master)](https://dev.azure.com/jannemattila/jannemattila/_build/latest?definitionId=43&branchName=master)
-![Docker Pulls](https://img.shields.io/docker/pulls/jannemattila/echo?style=plastic)
+[![Docker Pulls](https://img.shields.io/docker/pulls/jannemattila/echo?style=plastic)](https://hub.docker.com/r/jannemattila/echo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+![Echo screenshot](https://user-images.githubusercontent.com/2357647/194714325-9507a653-d41b-40d0-a66c-c45cf60a70b3.png)
+
+Echo can be used for testing various integrations and webhooks.
+It echoes back the request headers and request body, so you can
+study content better.
 
 ## Working with 'Echo'
 
