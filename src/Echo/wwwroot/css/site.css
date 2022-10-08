@@ -122,6 +122,7 @@ button {
     padding: 5px;
     margin-top: 5px;
     font-family: monospace;
+    min-height: 25px;
 }
 
 .close {
