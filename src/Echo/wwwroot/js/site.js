@@ -1,4 +1,6 @@
 ﻿let echoElement = document.getElementById("echo");
+let selectedElement = null;
+
 function addMessage(msg) {
     console.log(msg);
 
@@ -70,10 +72,14 @@ connection.start()
     });
 
 function copyToClipboard(elementName) {
-    var endpoint = document.getElementById(elementName);
+    let endpoint = document.getElementById(elementName);
     console.log(endpoint.innerText);
 
     navigator.clipboard.writeText(endpoint.innerText);
+}
+
+function selectElement(element) {
+    selectedElement = element;
 }
 
 function showHelp() {
@@ -94,8 +100,19 @@ function clearLog() {
     updateTitle();
 }
 
-document.addEventListener('keyup', (event) => {
-    if (event.keyCode === 27 /* Esc */) {
+document.addEventListener('keyup', e => {
+    if (e.key === "Escape") {
         hideHelp();
+    }
+    else if (e.key === "Backspace" || e.key === "Delete") {
+        if (selectedElement != null) {
+            try {
+                selectedElement.remove();
+
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        selectedElement = null;
     }
 });
