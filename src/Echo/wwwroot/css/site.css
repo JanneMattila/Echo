@@ -4,9 +4,29 @@
 }
 
 pre {
-    background-color: lightgray;
+    background-color: darkgray;
     padding: 5px;
     white-space: pre-wrap;
+}
+
+.url {
+    background-color: lightgray;
+    padding: 3px;
+    white-space: pre-wrap;
+    display: inline;
+    font-family: monospace;
+}
+
+button {
+    width: 35px;
+    height: 25px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.help {
+    background-color: lightgray;
+    margin-top: 5px;
 }
 
 .code {

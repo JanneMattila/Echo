@@ -1,6 +1,6 @@
 ﻿@model string
 <div>
-    Send data to <pre style="display: inline;" id="endpoint">@Model/api/echo</pre>
+    Send data to <text id="endpoint" class="url">@Model/api/echo</text>
     <button onclick="copyToClipboard('endpoint');">&#128203;</button>
     endpoint to see it here.
 
@@ -8,7 +8,7 @@
     <button id="helpOpen" onclick="showHelp();">➕</button>
     <button id="helpClose" onclick="hideHelp();" style="display:none">➖</button>
 </div>
-<div id="help" style="background-color:lightyellow;display:none">
+<div id="help" style="display:none" class="help">
     <br />
     Using curl: <button onclick="copyToClipboard('curl');">&#128203;</button>
     <pre id="curl">curl -d '{ "firstName": "John", "lastName": "Doe" }' -H "Content-Type: application/json" -X POST @Model/api/echo</pre>
@@ -31,7 +31,6 @@ Content-Type: application/json; charset=utf-8
     firstName: "John"
     lastName: "Doe"
 }</pre>
-    <br />
 </div>
 
 <div id="echo">
