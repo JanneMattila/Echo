@@ -1,6 +1,6 @@
 # This Dockerfile contains Build and Release steps:
 # 1. Build image(https://hub.docker.com/_/microsoft-dotnet-core-sdk/)
-FROM mcr.microsoft.com/dotnet/sdk:6.0.401-alpine3.16-amd64 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0.402-alpine3.16-amd64 AS build
 WORKDIR /source
 
 # Cache nuget restore
