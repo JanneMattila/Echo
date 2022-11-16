@@ -6,34 +6,32 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  name: echo
+  name: echo-svc
   namespace: echo
 spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
   selector:
     app: echo
-  ports:
-  - port: 31111
-    nodePort: 31111
-    targetPort: 80
-  type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: echo
+  name: echo-deployment
   namespace: echo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: echo  
+      app: echo
   template:
     metadata:
       labels:
         app: echo
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        kubernetes.io/os: linux
       containers:
       - image: jannemattila/echo:latest
         name: echo
