@@ -29,6 +29,11 @@ namespace Echo.Controllers
             {
                 scheme = Uri.UriSchemeHttps;
             }
+            else if (Request.Headers.ContainsKey("X-AppService-Proto") &&
+                Request.Headers["X-AppService-Proto"].Contains(Uri.UriSchemeHttps))
+            {
+                scheme = Uri.UriSchemeHttps;
+            }
             return View(model: $"{scheme}://{this.Request.Host}{this.Request.PathBase}");
         }
 
