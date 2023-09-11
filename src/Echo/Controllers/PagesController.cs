@@ -1,5 +1,6 @@
 ﻿using Echo.Hubs;
 using Echo.Models;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Net.Http.Headers;
@@ -85,14 +86,23 @@ namespace Echo.Controllers
                 headers.AppendLine($"{item.Key}: {item.Value}");
             }
 
+            var request = $"{this.Request.Method} {this.Request.Path}{this.Request.QueryString} {this.Request.Protocol}";
             await _echoHub.Clients.All.Echo(new EchoModel()
             {
-                Request = $"{this.Request.Method} {this.Request.Path}{this.Request.QueryString} {this.Request.Protocol}",
+                Request = request,
                 Headers = headers.ToString(),
                 Body = string.Empty
             });
 
-            return headers.ToString();
+            var feature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+            var originalPath = feature?.OriginalPath;
+            if (!string.IsNullOrEmpty(originalPath))
+            {
+                var originalRequest = $"Original request was: {feature?.OriginalPath}{feature?.OriginalQueryString}";
+                request = request + Environment.NewLine + Environment.NewLine + originalRequest;
+            }
+
+            return request + Environment.NewLine + Environment.NewLine + headers.ToString();
         }
 
         public IActionResult Error()

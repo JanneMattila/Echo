@@ -52,6 +52,8 @@ public class Startup
             app.UseExceptionHandler("/Home/Error");
         }
 
+        app.UseStatusCodePagesWithReExecute("/pages/echo", "?statusCode={0}");
+
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {
             ForwardedHeaders =
