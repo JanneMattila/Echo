@@ -1,4 +1,4 @@
-@endpoint = http://localhost:53118
+@endpoint = https://localhost:44339
 
 ### POST example
 POST {{endpoint}}/api/echo HTTP/1.1

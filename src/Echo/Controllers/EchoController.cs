@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Echo.Controllers;
@@ -53,8 +53,8 @@ public class EchoController : Controller
             // CloudEvents spec:
             // https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#41-validation-request
             // We let all the webhooks use this endpoint freely without limits
-            this.HttpContext.Response.Headers.Add("WebHook-Allowed-Origin", new StringValues("*"));
-            this.HttpContext.Response.Headers.Add("WebHook-Allowed-Rate", new StringValues("*"));
+            this.HttpContext.Response.Headers.Append("WebHook-Allowed-Origin", new StringValues("*"));
+            this.HttpContext.Response.Headers.Append("WebHook-Allowed-Rate", new StringValues("*"));
         }
         return Ok();
     }
@@ -63,7 +63,8 @@ public class EchoController : Controller
     {
         try
         {
-            return JToken.Parse(json).ToString();
+            using var document = JsonDocument.Parse(json);
+            return JsonSerializer.Serialize(document, new JsonSerializerOptions { WriteIndented = true });
         }
         catch (Exception)
         {

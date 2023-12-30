@@ -1,16 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Echo.Models
 {
     public class EchoModel
     {
-        [JsonProperty(PropertyName = "request", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonPropertyName("request")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string Request { get; internal set; } = string.Empty;
 
-        [JsonProperty(PropertyName = "headers", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonPropertyName("headers")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string Headers { get; internal set; } = string.Empty;
 
-        [JsonProperty(PropertyName = "body", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonPropertyName("body")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string Body { get; set; } = string.Empty;
     }
 }
