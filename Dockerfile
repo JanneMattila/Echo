@@ -14,7 +14,7 @@ RUN dotnet publish Echo.csproj --output /app/ --configuration Release
 # 2. Release image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.0-alpine3.18-amd64
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 
 # Copy content from Build image
 COPY --from=build /app .
