@@ -19,7 +19,7 @@ study content better.
 docker build . -t echo:latest
 
 # Run container using command
-docker run -it --rm -p "2001:80" echo:latest
+docker run -it --rm -p "8080:8080" echo:latest
 ``` 
 
 ### How to test locally
