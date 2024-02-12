@@ -28,6 +28,7 @@ public class Startup
             options.Providers.Add<GzipCompressionProvider>();
         });
 
+        services.AddHealthChecks();
         services.AddSignalR();
         services
             .AddControllersWithViews()
@@ -70,6 +71,7 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapHealthChecks("/healthz");
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Pages}/{action=Index}/{id?}");
