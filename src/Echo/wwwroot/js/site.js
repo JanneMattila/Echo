@@ -43,7 +43,7 @@ window.addEventListener('blur', () => {
 connection.on('echo', function (msg) {
     try {
         let data = "Date received: " + new Date().toLocaleTimeString();
-        data += "\n" + msg.request;
+        data += "\n" + msg.request + "\n";
         for (const header in msg.headers) {
             data += header + ": " + msg.headers[header] + "\n";
         }
