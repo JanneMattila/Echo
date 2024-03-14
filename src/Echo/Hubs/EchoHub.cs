@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Echo.Hubs
+namespace Echo.Hubs;
+
+public class EchoHub : Hub<IEchoHub>
 {
-    public class EchoHub : Hub<IEchoHub>
-    {
-    }
 }

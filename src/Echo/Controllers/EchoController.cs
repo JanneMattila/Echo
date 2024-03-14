@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -17,34 +18,40 @@ namespace Echo.Controllers;
 public class EchoController : Controller
 {
     private readonly IHubContext<EchoHub, IEchoHub> _echoHub;
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new() { WriteIndented = true };
 
     public EchoController(IHubContext<EchoHub, IEchoHub> echoHub)
     {
         _echoHub = echoHub;
     }
 
-    public async Task<ActionResult> ExecuteAsync()
+    [HttpGet]
+    public IActionResult Get()
+    {
+        var echo = FillEchoModel(string.Empty);
+
+        var environmentVariables = new Dictionary<string, string>();
+        foreach (DictionaryEntry item in Environment.GetEnvironmentVariables())
+        {
+            if (item.Key is string key && item.Value is string value)
+            {
+                environmentVariables.Add(key, value);
+            }
+        }
+
+        echo.Uptime = Program.Started;
+        echo.EnvironmentVariables = environmentVariables;
+        return Ok(echo);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> PostAsync()
     {
         using (var stream = new StreamReader(this.HttpContext.Request.Body))
         {
             var body = await stream.ReadToEndAsync();
-            var headers = new StringBuilder();
-            foreach (var item in this.HttpContext.Request.Headers)
-            {
-                headers.AppendLine($"{item.Key}: {item.Value}");
-            }
-
-            if (this.HttpContext.Request.HasJsonContentType())
-            {
-                body = FormatJson(body);
-            }
-
-            await _echoHub.Clients.All.Echo(new EchoModel()
-            {
-                Request = $"{this.Request.Method} {this.Request.Path}{this.Request.QueryString} {this.Request.Protocol}",
-                Headers = headers.ToString(),
-                Body = body
-            });
+            var echo = FillEchoModel(body);
+            await _echoHub.Clients.All.Echo(echo);
         }
 
         if (this.HttpContext.Request.Method == "OPTIONS" &&
@@ -59,12 +66,34 @@ public class EchoController : Controller
         return Ok();
     }
 
+    private EchoModel FillEchoModel(string body)
+    {
+        var headers = new Dictionary<string, string>();
+        foreach (var item in this.HttpContext.Request.Headers)
+        {
+            headers.Add(item.Key, item.Value.ToString());
+        }
+
+        if (string.IsNullOrEmpty(body) == false &&
+            this.HttpContext.Request.HasJsonContentType())
+        {
+            body = FormatJson(body);
+        }
+
+        return new EchoModel()
+        {
+            Request = $"{this.Request.Method} {this.Request.Path}{this.Request.QueryString} {this.Request.Protocol}",
+            Headers = headers,
+            Body = body
+        };
+    }
+
     private string FormatJson(string json)
     {
         try
         {
             using var document = JsonDocument.Parse(json);
-            return JsonSerializer.Serialize(document, new JsonSerializerOptions { WriteIndented = true });
+            return JsonSerializer.Serialize(document, _jsonSerializerOptions);
         }
         catch (Exception)
         {

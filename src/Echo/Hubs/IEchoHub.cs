@@ -1,10 +1,9 @@
 ﻿using Echo.Models;
 using System.Threading.Tasks;
 
-namespace Echo.Hubs
+namespace Echo.Hubs;
+
+public interface IEchoHub
 {
-    public interface IEchoHub
-    {
-        Task Echo(EchoModel echoModel);
-    }
+    Task Echo(EchoModel echoModel);
 }

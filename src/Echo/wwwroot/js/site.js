@@ -41,11 +41,18 @@ window.addEventListener('blur', () => {
 });
 
 connection.on('echo', function (msg) {
-    let data = "Date received: " + new Date().toLocaleTimeString();
-    data += "\n" + msg.request;
-    data += "\n\n" + msg.headers;
-    data += "\n" + msg.body;
-    addMessage(data);
+    try {
+        let data = "Date received: " + new Date().toLocaleTimeString();
+        data += "\n" + msg.request;
+        for (const header in msg.headers) {
+            data += header + ": " + msg.headers[header] + "\n";
+        }
+        data += "\n" + msg.body;
+        addMessage(data);
+    } catch (e) {
+        addMessage(JSON.stringify(e));
+        addMessage(JSON.stringify(msg));
+    }
 
     if (!isFocus) {
         unreadMessages++;
