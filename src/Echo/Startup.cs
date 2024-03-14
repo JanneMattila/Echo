@@ -1,4 +1,5 @@
 ﻿using Echo.Hubs;
+using Echo.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +34,8 @@ public class Startup
         services
             .AddControllersWithViews()
             .AddControllersAsServices();
+
+        services.Configure<EchoOptions>(Configuration.GetSection("Echo"));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

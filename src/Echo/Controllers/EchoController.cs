@@ -3,6 +3,7 @@ using Echo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections;
@@ -18,10 +19,12 @@ namespace Echo.Controllers;
 public class EchoController : Controller
 {
     private readonly IHubContext<EchoHub, IEchoHub> _echoHub;
+    private readonly EchoOptions _options;
     private readonly JsonSerializerOptions _jsonSerializerOptions = new() { WriteIndented = true };
 
-    public EchoController(IHubContext<EchoHub, IEchoHub> echoHub)
+    public EchoController(IHubContext<EchoHub, IEchoHub> echoHub, IOptions<EchoOptions> options)
     {
+        _options = options.Value;
         _echoHub = echoHub;
     }
 
@@ -29,18 +32,20 @@ public class EchoController : Controller
     public IActionResult Get()
     {
         var echo = FillEchoModel(string.Empty);
-
-        var environmentVariables = new Dictionary<string, string>();
-        foreach (DictionaryEntry item in Environment.GetEnvironmentVariables())
-        {
-            if (item.Key is string key && item.Value is string value)
-            {
-                environmentVariables.Add(key, value);
-            }
-        }
-
         echo.Uptime = Program.Started;
-        echo.EnvironmentVariables = environmentVariables;
+
+        if (_options.ShowEnvironmentVariables)
+        {
+            var environmentVariables = new Dictionary<string, string>();
+            foreach (DictionaryEntry item in Environment.GetEnvironmentVariables())
+            {
+                if (item.Key is string key && item.Value is string value)
+                {
+                    environmentVariables.Add(key, value);
+                }
+            }
+            echo.EnvironmentVariables = environmentVariables;
+        }
         return Ok(echo);
     }
 
