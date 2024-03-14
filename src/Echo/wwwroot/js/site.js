@@ -78,11 +78,16 @@ connection.start()
         addMessage(err);
     });
 
-function copyToClipboard(elementName) {
+function copyToClipboard(clickedElement, elementName) {
     let endpoint = document.getElementById(elementName);
     console.log(endpoint.innerText);
 
     navigator.clipboard.writeText(endpoint.innerText);
+
+    clickedElement.innerHTML = "📝";
+    setTimeout(function () {
+        clickedElement.innerHTML = "📋";
+    }, 300);
 }
 
 function selectElement(element) {
@@ -101,10 +106,15 @@ function hideHelp() {
     document.getElementById('help').style.display = 'none';
 }
 
-function clearLog() {
+function clearLog(clickedElement) {
     console.log('clearing log');
     echoElement.innerHTML = '';
     updateTitle();
+
+    clickedElement.innerHTML = "⟲";
+    setTimeout(function () {
+        clickedElement.innerHTML = "⟳";
+    }, 300);
 }
 
 document.addEventListener('keyup', e => {
