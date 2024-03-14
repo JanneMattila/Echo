@@ -82,7 +82,16 @@ function copyToClipboard(clickedElement, elementName) {
     let endpoint = document.getElementById(elementName);
     console.log(endpoint.innerText);
 
-    navigator.clipboard.writeText(endpoint.innerText);
+    let input = document.createElement("textarea");
+    input.innerHTML = endpoint.innerText;
+    document.body.appendChild(input);
+    input.select();
+    try {
+        document.execCommand("copy");
+    } catch (e) {
+        console.error(e);
+    }
+    document.body.removeChild(input);
 
     clickedElement.innerHTML = "📝";
     setTimeout(function () {
