@@ -57,8 +57,6 @@ public class Startup
             app.UseExceptionHandler("/Home/Error");
         }
 
-        app.UseStatusCodePagesWithReExecute("/pages/echo", "?statusCode={0}");
-
         var options = new ForwardedHeadersOptions
         {
             ForwardedHeaders =
@@ -67,17 +65,17 @@ public class Startup
                 ForwardedHeaders.XForwardedProto
         };
 
-        var knownProxy = Configuration["CUSTOM_KNOWN_PROXY"];
-        if (!string.IsNullOrEmpty(knownProxy))
-        {
-            options.KnownProxies.Add(IPAddress.Parse(knownProxy));
-        }
-
         var allowAllProxies = Configuration["CUSTOM_ALLOW_ALL_PROXIES"];
         if (!string.IsNullOrEmpty(allowAllProxies) && bool.TryParse(allowAllProxies, out var value) && value)
         {
             options.KnownNetworks.Clear();
             options.KnownProxies.Clear();
+        }
+
+        var knownProxy = Configuration["CUSTOM_KNOWN_PROXY"];
+        if (!string.IsNullOrEmpty(knownProxy))
+        {
+            options.KnownProxies.Add(IPAddress.Parse(knownProxy));
         }
 
         var allowedHost = Configuration["CUSTOM_ALLOWED_HOST"];
@@ -93,6 +91,9 @@ public class Startup
         }
 
         app.UseForwardedHeaders(options);
+
+        app.UseStatusCodePagesWithReExecute("/pages/echo", "?statusCode={0}");
+
 
         app.UseResponseCompression();
 
