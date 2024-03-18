@@ -23,3 +23,9 @@ GET {{endpoint}}/pages/echocache
 GET {{endpoint}}/pages/echocache
 X-Custom: ABC
 If-None-Match: QUJD
+
+### Forwarded host
+GET {{endpoint}}/
+X-FORWARDED-PROTO: http
+X-FORWARDED-PORT: 80
+X-Forwarded-Host: contoso.northeurope.cloudapp.azure.com

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Net;
 
 namespace Echo;
 
@@ -58,13 +59,40 @@ public class Startup
 
         app.UseStatusCodePagesWithReExecute("/pages/echo", "?statusCode={0}");
 
-        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        var options = new ForwardedHeadersOptions
         {
             ForwardedHeaders =
                 ForwardedHeaders.XForwardedHost |
                 ForwardedHeaders.XForwardedFor |
                 ForwardedHeaders.XForwardedProto
-        });
+        };
+
+        var knownProxy = Configuration["CUSTOM_KNOWN_PROXY"];
+        if (!string.IsNullOrEmpty(knownProxy))
+        {
+            options.KnownProxies.Add(IPAddress.Parse(knownProxy));
+        }
+
+        var allowAllProxies = Configuration["CUSTOM_ALLOW_ALL_PROXIES"];
+        if (!string.IsNullOrEmpty(allowAllProxies) && bool.TryParse(allowAllProxies, out var value) && value)
+        {
+            options.KnownNetworks.Clear();
+            options.KnownProxies.Clear();
+        }
+
+        var allowedHost = Configuration["CUSTOM_ALLOWED_HOST"];
+        if (!string.IsNullOrEmpty(allowedHost))
+        {
+            options.AllowedHosts.Add(allowedHost);
+        }
+
+        var forwardedHostHeader = Configuration["CUSTOM_FORWARDED_HOST_HEADER"];
+        if (!string.IsNullOrEmpty(forwardedHostHeader))
+        {
+            options.ForwardedHostHeaderName = forwardedHostHeader;
+        }
+
+        app.UseForwardedHeaders(options);
 
         app.UseResponseCompression();
 
