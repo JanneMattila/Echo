@@ -1,4 +1,6 @@
-﻿let echoElement = document.getElementById("echo");
+﻿console.log(`WebApp.Root: ${WebApp.Root}`);
+
+let echoElement = document.getElementById("echo");
 let selectedElement = null;
 
 function addMessage(msg) {
@@ -14,7 +16,7 @@ function addMessage(msg) {
 }
 
 let protocol = new signalR.JsonHubProtocol();
-let hubRoute = "Echo";
+let hubRoute = `${WebApp.Root}Echo`;
 let connection = new signalR.HubConnectionBuilder()
     .withUrl(hubRoute)
     .withAutomaticReconnect()

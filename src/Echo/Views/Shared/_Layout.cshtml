@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Echo</title>
 
+    <script>
+        var WebApp = WebApp || {};
+        WebApp.Root = "@Url.Content("~/")";
+
+        console.log(`WebApp.Root: ${WebApp.Root}`);
+    </script>
+
     <environment include="Development">
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>

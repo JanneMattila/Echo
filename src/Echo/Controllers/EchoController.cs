@@ -50,6 +50,7 @@ public class EchoController : Controller
     }
 
     [HttpPost]
+    [HttpOptions]
     public async Task<ActionResult> PostAsync()
     {
         using (var stream = new StreamReader(this.HttpContext.Request.Body))

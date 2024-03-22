@@ -94,7 +94,6 @@ public class Startup
 
         app.UseStatusCodePagesWithReExecute("/pages/echo", "?statusCode={0}");
 
-
         app.UseResponseCompression();
 
         app.UseStaticFiles();
