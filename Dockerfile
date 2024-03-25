@@ -12,7 +12,7 @@ COPY /src/Echo .
 RUN dotnet publish Echo.csproj --output /app/ --configuration Release
 
 # 2. Release image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0.1-alpine3.18-amd64
+FROM mcr.microsoft.com/dotnet/aspnet:8.0.3-alpine3.18-amd64
 WORKDIR /app
 
 ENV ASPNETCORE_URLS http://*:8080
