@@ -1,11 +1,16 @@
-function changeTheme() {
+﻿const changeTheme = (change) => {
     let theme = localStorage.getItem("theme");
-    if (theme == null || theme === "light") {
-        theme = "dark";
+    if (change) {
+        if (theme == null || theme === "light") {
+            theme = "dark";
+        }
+        else {
+            theme = "light";
+        }
     }
-    else {
-        theme = "light";
-    }
+
+    const button = document.getElementById("theme");
+    button.innerText = theme === "dark" ? "☀" : "☽︎";
 
     localStorage.setItem("theme", theme);
 
@@ -15,9 +20,4 @@ function changeTheme() {
     document.body.classList.add(theme);
 }
 
-const startTheme = localStorage.getItem("theme");
-if (startTheme != null) {
-    console.log(startTheme);
-    document.getElementsByTagName("html")[0].className = startTheme;
-    document.body.classList.add(startTheme);
-}
+changeTheme(false);

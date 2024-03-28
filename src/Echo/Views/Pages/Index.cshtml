@@ -7,7 +7,7 @@
     <button id="clear" onclick="clearLog(this);">⟳</button>
     <button id="helpOpen" onclick="showHelp();">➕</button>
     <button id="helpClose" onclick="hideHelp();" style="display:none">➖</button>
-    <button class="theme" onclick="changeTheme();">☀</button>
+    <button id="theme" class="theme" onclick="changeTheme(true);"></button>
 </div>
 <div id="help" style="display:none" class="help">
     Using curl: <button onclick="copyToClipboard(this, 'curl');">&#128203;</button>
