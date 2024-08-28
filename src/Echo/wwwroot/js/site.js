@@ -85,7 +85,7 @@ function copyToClipboard(clickedElement, elementName) {
     console.log(endpoint.innerText);
 
     let input = document.createElement("textarea");
-    input.innerText = endpoint.innerText;
+    input.innerHTML = endpoint.innerHTML;
     document.body.appendChild(input);
     input.select();
     try {
