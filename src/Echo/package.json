@@ -9,6 +9,6 @@
   "author": "Janne Mattila",
   "license": "MIT",
   "dependencies": {
-    "@microsoft/signalr": "^6.0.0"
+    "@microsoft/signalr": "8.0.07"
   }
 }
