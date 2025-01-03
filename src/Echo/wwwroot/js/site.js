@@ -1,6 +1,5 @@
 ﻿console.log(`WebApp.Root: ${WebApp.Root}`);
 
-let echoElement = document.getElementById("echo");
 let selectedElement = null;
 
 function addMessage(msg) {
@@ -12,6 +11,7 @@ function addMessage(msg) {
 
     block.querySelectorAll("text")[0].textContent = msg;
 
+    const echoElement = document.getElementById("echo");
     echoElement.insertBefore(block, echoElement.firstChild);
 }
 
@@ -119,7 +119,7 @@ function hideHelp() {
 
 function clearLog(clickedElement) {
     console.log('clearing log');
-    echoElement.innerHTML = '';
+    document.getElementById("echo").innerHTML = '';
     updateTitle();
 
     clickedElement.innerHTML = "⟲";

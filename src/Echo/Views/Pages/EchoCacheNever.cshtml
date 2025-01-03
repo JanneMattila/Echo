@@ -1,6 +1,6 @@
 ﻿@model string
 
 <div>
-    This request has been echoed (but never cached)!
+    This request has been echoed - @DateTime.Now.ToString("yyyy-MM-dd  HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture) (caching disabled)!
     <pre>@Html.Raw(Model)</pre>
 </div>

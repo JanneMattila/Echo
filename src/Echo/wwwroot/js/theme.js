@@ -10,7 +10,9 @@
     }
 
     const button = document.getElementById("theme");
-    button.innerText = theme === "dark" ? "☀" : "☽︎";
+    if (button) {
+        button.innerText = theme === "dark" ? "☀" : "☽︎";
+    }
 
     localStorage.setItem("theme", theme);
 

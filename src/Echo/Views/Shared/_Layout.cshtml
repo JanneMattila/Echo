@@ -20,8 +20,6 @@
     </environment>
 </head>
 <body>
-    @RenderBody()
-
     <environment include="Development">
         <script src="~/lib/signalr/signalr.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -31,6 +29,7 @@
         <script src="~/lib/signalr/signalr.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+    @RenderBody()
     @RenderSection("Scripts", required: false)
 </body>
 </html>

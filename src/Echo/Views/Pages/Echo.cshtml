@@ -1,6 +1,6 @@
 ﻿@model string
 
 <div>
-    This request has been echoed!
+    This request has been echoed - @DateTime.Now.ToString("yyyy-MM-dd  HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)!
     <pre>@Html.Raw(Model)</pre>
 </div>
