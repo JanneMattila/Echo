@@ -46,6 +46,11 @@ public class PagesController : Controller
         return View(model: data);
     }
 
+    public async Task<IActionResult> EchoEsi()
+    {
+        return await Echo();
+    }
+
     [ResponseCache(Duration = 10, Location = ResponseCacheLocation.Any, VaryByHeader = "x-custom")]
     public async Task<IActionResult> EchoCache()
     {
