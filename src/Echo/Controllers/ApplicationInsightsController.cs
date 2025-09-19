@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Echo.Controllers;
 
-[Produces("application/json")]
+[ApiExplorerSettings(IgnoreApi = true)]
 [Route("v2/track")]
 [Route("v2.1/track")]
 public class ApplicationInsightsController : Controller

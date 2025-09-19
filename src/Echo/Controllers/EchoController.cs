@@ -28,7 +28,12 @@ public class EchoController : Controller
         _echoHub = echoHub;
     }
 
+    /// <summary>
+    /// Gets echo information for a simple GET request.
+    /// </summary>
+    /// <returns>Echo model containing request metadata.</returns>
     [HttpGet]
+    [ProducesResponseType(typeof(EchoModel), StatusCodes.Status200OK)]
     public IActionResult Get()
     {
         var echo = FillEchoModel(string.Empty);
@@ -49,8 +54,17 @@ public class EchoController : Controller
         return Ok(echo);
     }
 
+    /// <summary>
+    /// Echoes back the request headers and body (if JSON, pretty printed) and pushes the payload to SignalR clients.
+    /// </summary>
+    /// <remarks>
+    /// Send any payload in the body. If Content-Type is application/json, it will be formatted.
+    /// </remarks>
+    /// <returns>Status 200 OK.</returns>
     [HttpPost]
     [HttpOptions]
+    [Consumes("text/plain", "application/x-www-form-urlencoded", "application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> PostAsync()
     {
         using (var stream = new StreamReader(this.HttpContext.Request.Body))

@@ -8,7 +8,11 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
 using System.Net;
+using System.Reflection;
 
 namespace Echo;
 
@@ -37,6 +41,32 @@ public class Startup
             .AddControllersAsServices();
 
         services.Configure<EchoOptions>(Configuration.GetSection("Echo"));
+
+        // Swagger / OpenAPI
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(options =>
+        {
+            options.OperationFilter<AddRawBodyParameterFilter>();
+            options.SwaggerDoc("v1", new() 
+            { 
+                Title = "Echo API", 
+                Version = "v1", 
+                Description = "Echo endpoints",
+                License = new OpenApiLicense
+                {
+                    Name = "Use under MIT",
+                    Url = new Uri("https://opensource.org/licenses/MIT"),
+                }
+            });
+
+            // Include XML comments
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(System.AppContext.BaseDirectory, xmlFile);
+            if (File.Exists(xmlPath))
+            {
+                options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+            }
+        });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +86,14 @@ public class Startup
         {
             app.UseExceptionHandler("/Home/Error");
         }
+
+        // Enable middleware to serve generated Swagger as JSON and the UI (placed early so it's accessible even if other middleware fails later)
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Echo API v1");
+            c.RoutePrefix = "swagger"; // access at /swagger
+        });
 
         var options = new ForwardedHeadersOptions
         {
