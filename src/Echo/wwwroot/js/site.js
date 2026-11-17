@@ -133,10 +133,12 @@ document.addEventListener('keyup', e => {
         hideHelp();
     }
     else if (e.key === "Backspace" || e.key === "Delete") {
-        if (selectedElement != null) {
+        let target = selectedElement != null && selectedElement.isConnected
+            ? selectedElement
+            : document.getElementById("echo").firstElementChild;
+        if (target != null) {
             try {
-                selectedElement.remove();
-
+                target.remove();
             } catch (err) {
                 console.log(err);
             }
