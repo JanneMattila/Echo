@@ -2,6 +2,7 @@
 using Echo.Models;
 using Echo.Tools;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -143,6 +144,27 @@ public class Startup
         app.UseResponseCompression();
 
         app.UseStaticFiles();
+
+        // Plain GET requests to MCP endpoint (e.g., from browser) get an informational response
+        // instead of the generic status code page. MCP clients opening SSE stream are passed through.
+        app.Use(async (context, next) =>
+        {
+            if (context.Request.Path.Equals("/mcp", StringComparison.OrdinalIgnoreCase))
+            {
+                var statusCodePagesFeature = context.Features.Get<IStatusCodePagesFeature>();
+                if (statusCodePagesFeature != null)
+                {
+                    statusCodePagesFeature.Enabled = false;
+                }
+
+                if (HttpMethods.IsGet(context.Request.Method) &&
+                    !context.Request.Headers.Accept.ToString().Contains("text/event-stream", StringComparison.OrdinalIgnoreCase))
+                {
+                    context.Request.Path = "/pages/mcp";
+                }
+            }
+            await next(context);
+        });
 
         app.UseRouting();
 

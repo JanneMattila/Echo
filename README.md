@@ -65,11 +65,14 @@ Echo exposes a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) 
 | `echo`             | Echoes the `message` back and broadcasts it to all connected Echo web page clients.          |
 | `get_request_info` | Returns the HTTP request line, headers and server start time of the MCP request.             |
 
-Example MCP client configuration (e.g., VS Code `.vscode/mcp.json`):
+Opening `/mcp` in a browser (or a plain `GET`) returns `405 Method Not Allowed` with an
+informational page (HTML) or JSON document describing the endpoint and its tools.
+
+Example MCP client configuration (`.mcp.json`):
 
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "echo": {
       "type": "http",
       "url": "http://localhost:2001/mcp"

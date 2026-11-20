@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Net.Http.Headers;
+using ModelContextProtocol.Server;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +27,45 @@ public class PagesController : Controller
 
     public IActionResult Index()
     {
+        return View(model: GetBaseUrl());
+    }
+
+    /// <summary>
+    /// Informational response for non-MCP GET requests to the MCP endpoint (e.g., opened in a browser).
+    /// </summary>
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public IActionResult Mcp([FromServices] IEnumerable<McpServerTool> tools)
+    {
+        var model = new McpInfoModel
+        {
+            Endpoint = $"{GetBaseUrl()}/mcp",
+            Tools = tools
+                .Select(t => new McpToolInfo { Name = t.ProtocolTool.Name, Description = t.ProtocolTool.Description ?? string.Empty })
+                .ToList()
+        };
+
+        // MCP endpoint only supports POST (stateless Streamable HTTP transport)
+        Response.StatusCode = StatusCodes.Status405MethodNotAllowed;
+        Response.Headers.Allow = HttpMethods.Post;
+
+        var accept = Request.Headers.Accept.ToString();
+        if (accept.Contains("text/html", StringComparison.OrdinalIgnoreCase))
+        {
+            return View(model);
+        }
+
+        return Json(new
+        {
+            protocol = "Model Context Protocol (MCP)",
+            transport = "Streamable HTTP",
+            message = "This is an MCP server endpoint. Send MCP JSON-RPC messages using POST.",
+            endpoint = model.Endpoint,
+            tools = model.Tools.Select(t => new { name = t.Name, description = t.Description })
+        });
+    }
+
+    private string GetBaseUrl()
+    {
         var scheme = Request.Scheme;
         if (Request.Headers.TryGetValue("x-arr-ssl", out Microsoft.Extensions.Primitives.StringValues value) &&
             value.Contains("true"))
@@ -37,7 +77,7 @@ public class PagesController : Controller
         {
             scheme = Uri.UriSchemeHttps;
         }
-        return View(model: $"{scheme}://{this.Request.Host}{this.Request.PathBase}");
+        return $"{scheme}://{this.Request.Host}{this.Request.PathBase}";
     }
 
     public async Task<IActionResult> Echo()

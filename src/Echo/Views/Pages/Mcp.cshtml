@@ -1,0 +1,35 @@
+@model Echo.Models.McpInfoModel
+<div>
+    This is a <a href="https://modelcontextprotocol.io/" target="_blank">Model Context Protocol (MCP)</a> server endpoint:
+    <text id="endpoint" class="url">@Model.Endpoint</text>
+    <button onclick="copyToClipboard(this, 'endpoint');">&#128203;</button>
+
+    <button id="theme" class="theme" onclick="changeTheme(true);"></button>
+</div>
+<div class="help">
+    It uses the Streamable HTTP transport and accepts MCP JSON-RPC messages via <b>POST</b>.
+    Opening it in a browser does not do anything useful &mdash; add it to your MCP client instead.
+</div>
+
+<h3>Tools</h3>
+<ul>
+    @foreach (var tool in Model.Tools)
+    {
+        <li><span class="url">@tool.Name</span> &mdash; @tool.Description</li>
+    }
+</ul>
+
+<h3>Configuration</h3>
+MCP client configuration (<span class="url">.mcp.json</span>): <button onclick="copyToClipboard(this, 'mcpjson');">&#128203;</button>
+<text id="mcpjson" class="clip">{
+  "mcpServers": {
+    "echo": {
+      "type": "http",
+      "url": "@Model.Endpoint"
+    }
+  }
+}</text>
+<br />
+
+List tools using curl: <button onclick="copyToClipboard(this, 'curl');">&#128203;</button>
+<text id="curl" class="clip">curl -X POST @Model.Endpoint -H "Content-Type: application/json" -H "Accept: application/json, text/event-stream" -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'</text>
