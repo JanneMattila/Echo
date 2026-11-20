@@ -63,6 +63,7 @@ public class EchoController : Controller
     /// <returns>Status 200 OK.</returns>
     [HttpPost]
     [HttpOptions]
+    [HttpHead]
     [Consumes("text/plain", "application/x-www-form-urlencoded", "application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> PostAsync()

@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using System;
 
 namespace Echo;
@@ -10,11 +10,11 @@ public class Program
 
     public static void Main(string[] args)
     {
-        BuildWebHost(args).Run();
+        BuildHost(args).Run();
     }
 
-    public static IWebHost BuildWebHost(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>()
+    public static IHost BuildHost(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
             .Build();
 }

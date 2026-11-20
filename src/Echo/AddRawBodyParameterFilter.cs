@@ -1,4 +1,4 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
 
@@ -13,19 +13,19 @@ public class AddRawBodyParameterFilter : IOperationFilter
             operation.RequestBody = new OpenApiRequestBody
             {
                 Required = true,
-                Content = new Dictionary<string, OpenApiMediaType>
+                Content = new Dictionary<string, IOpenApiMediaType>
                 {
                     ["text/plain"] = new OpenApiMediaType
                     {
-                        Schema = new OpenApiSchema { Type = "string" }
+                        Schema = new OpenApiSchema { Type = JsonSchemaType.String }
                     },
                     ["application/x-www-form-urlencoded"] = new OpenApiMediaType
                     {
-                        Schema = new OpenApiSchema { Type = "string" }
+                        Schema = new OpenApiSchema { Type = JsonSchemaType.String }
                     },
                     ["application/json"] = new OpenApiMediaType
                     {
-                        Schema = new OpenApiSchema { Type = "string" }
+                        Schema = new OpenApiSchema { Type = JsonSchemaType.String }
                     }
                 }
             };

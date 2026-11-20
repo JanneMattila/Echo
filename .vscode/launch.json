@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Echo/bin/Debug/net6.0/Echo.dll",
+            "program": "${workspaceFolder}/src/Echo/bin/Debug/net11.0/Echo.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Echo",
             "stopAtEntry": false,
