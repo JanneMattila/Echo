@@ -1,5 +1,6 @@
 ﻿using Echo.Hubs;
 using Echo.Models;
+using Echo.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -41,6 +42,13 @@ public class Startup
             .AddControllersAsServices();
 
         services.Configure<EchoOptions>(Configuration.GetSection("Echo"));
+
+        // Model Context Protocol (MCP) server
+        services.AddHttpContextAccessor();
+        services
+            .AddMcpServer()
+            .WithHttpTransport(options => options.Stateless = true)
+            .WithTools<EchoTools>();
 
         // Swagger / OpenAPI
         services.AddEndpointsApiExplorer();
@@ -145,6 +153,7 @@ public class Startup
                 name: "default",
                 pattern: "{controller=Pages}/{action=Index}/{id?}");
             endpoints.MapHub<EchoHub>("Echo");
+            endpoints.MapMcp("/mcp");
         });
     }
 }

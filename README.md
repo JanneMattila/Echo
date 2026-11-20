@@ -55,6 +55,29 @@ Content-Type: application/json; charset=utf-8
 }
 ``` 
 
+### MCP server
+
+Echo exposes a [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server
+(Streamable HTTP transport) at `/mcp` with two tools:
+
+| Tool               | Description                                                                                  |
+| ------------------ | -------------------------------------------------------------------------------------------- |
+| `echo`             | Echoes the `message` back and broadcasts it to all connected Echo web page clients.          |
+| `get_request_info` | Returns the HTTP request line, headers and server start time of the MCP request.             |
+
+Example MCP client configuration (e.g., VS Code `.vscode/mcp.json`):
+
+```json
+{
+  "servers": {
+    "echo": {
+      "type": "http",
+      "url": "http://localhost:2001/mcp"
+    }
+  }
+}
+```
+
 ### How to deploy to Azure Container Instances (ACI)
 
 Deploy published image to [Azure Container Instances (ACI)](https://docs.microsoft.com/en-us/azure/container-instances/) the Azure CLI way:

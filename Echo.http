@@ -16,6 +16,27 @@ WebHook-Request-Rate: 120
 ### HEAD example
 HEAD {{endpoint}}/api/echo HTTP/1.1
 
+### MCP: list tools
+POST {{endpoint}}/mcp HTTP/1.1
+Content-Type: application/json
+Accept: application/json, text/event-stream
+
+{"jsonrpc":"2.0","id":1,"method":"tools/list"}
+
+### MCP: call echo tool
+POST {{endpoint}}/mcp HTTP/1.1
+Content-Type: application/json
+Accept: application/json, text/event-stream
+
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"echo","arguments":{"message":"hello"}}}
+
+### MCP: call get_request_info tool
+POST {{endpoint}}/mcp HTTP/1.1
+Content-Type: application/json
+Accept: application/json, text/event-stream
+
+{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_request_info","arguments":{}}}
+
 ### Page view to cause echo
 GET {{endpoint}}/pages/echo HTTP/1.1
 
